@@ -114,7 +114,7 @@ class _$BookDao extends BookDao {
   _$BookDao(
     this.database,
     this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database),
+  )   : _queryAdapter = QueryAdapter(database, changeListener),
         _bookInsertionAdapter = InsertionAdapter(
             database,
             'Book',
@@ -125,7 +125,21 @@ class _$BookDao extends BookDao {
                   'genre': _genreConverter.encode(item.genre),
                   'readingDate': _dateTimeConverter.encode(item.readingDate),
                   'rating': item.rating
-                });
+                },
+            changeListener),
+        _bookDeletionAdapter = DeletionAdapter(
+            database,
+            'Book',
+            ['id'],
+            (Book item) => <String, Object?>{
+                  'id': item.id,
+                  'title': item.title,
+                  'author': item.author,
+                  'genre': _genreConverter.encode(item.genre),
+                  'readingDate': _dateTimeConverter.encode(item.readingDate),
+                  'rating': item.rating
+                },
+            changeListener);
 
   final sqflite.DatabaseExecutor database;
 
@@ -135,21 +149,43 @@ class _$BookDao extends BookDao {
 
   final InsertionAdapter<Book> _bookInsertionAdapter;
 
+  final DeletionAdapter<Book> _bookDeletionAdapter;
+
   @override
-  Future<List<Book>> getAllBooks() async {
-    return _queryAdapter.queryList('SELECT * FROM Book',
+  Stream<List<Book>> getAllBooks() {
+    return _queryAdapter.queryListStream('SELECT * FROM Book',
         mapper: (Map<String, Object?> row) => Book(
             id: row['id'] as int?,
             title: row['title'] as String,
             author: row['author'] as String,
             genre: _genreConverter.decode(row['genre'] as String),
             readingDate: _dateTimeConverter.decode(row['readingDate'] as int),
-            rating: row['rating'] as int));
+            rating: row['rating'] as int),
+        queryableName: 'Book',
+        isView: false);
+  }
+
+  @override
+  Future<Book?> getBookById(int id) async {
+    return _queryAdapter.query('SELECT * FROM Book WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => Book(
+            id: row['id'] as int?,
+            title: row['title'] as String,
+            author: row['author'] as String,
+            genre: _genreConverter.decode(row['genre'] as String),
+            readingDate: _dateTimeConverter.decode(row['readingDate'] as int),
+            rating: row['rating'] as int),
+        arguments: [id]);
   }
 
   @override
   Future<void> insertBook(Book book) async {
     await _bookInsertionAdapter.insert(book, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteBook(Book book) async {
+    await _bookDeletionAdapter.delete(book);
   }
 }
 

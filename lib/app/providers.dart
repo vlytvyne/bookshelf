@@ -7,6 +7,10 @@ final databaseProvider = Provider<AppDatabase>((ref) {
   throw Exception('Provider was not initialized. Override it in the main.');
 });
 
-final booksList = FutureProvider<List<Book>>((ref) {
+final booksListProvider = StreamProvider<List<Book>>((ref) {
   return ref.read(databaseProvider).bookDao.getAllBooks();
+});
+
+final bookProvider = FutureProvider.family<Book?, int>((ref, id) {
+  return ref.read(databaseProvider).bookDao.getBookById(id);
 });

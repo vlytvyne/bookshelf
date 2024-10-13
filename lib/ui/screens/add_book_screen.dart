@@ -134,8 +134,12 @@ class _AddBookScreenState extends ConsumerState<AddBookScreen> {
       rating: _selectedRating,
     );
 
-    await ref.read(databaseProvider).bookDao.insertBook(book);
-    print('success');
+    try {
+      await ref.read(databaseProvider).bookDao.insertBook(book);
+      Navigator.of(context).pop();
+    } catch (e) {
+      print('error');
+    }
   }
 
 }

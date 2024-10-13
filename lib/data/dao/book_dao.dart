@@ -5,8 +5,14 @@ import 'package:floor/floor.dart';
 abstract class BookDao {
 
   @Query('SELECT * FROM Book')
-  Future<List<Book>> getAllBooks();
+  Stream<List<Book>> getAllBooks();
+
+  @Query('SELECT * FROM Book WHERE id = :id')
+  Future<Book?> getBookById(int id);
 
   @insert
   Future<void> insertBook(Book book);
+
+  @delete
+  Future<void> deleteBook(Book book);
 }
