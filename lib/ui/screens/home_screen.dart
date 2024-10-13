@@ -1,4 +1,5 @@
 import 'package:bookshelf/data/entities/book.dart';
+import 'package:bookshelf/ui/screens/add_book_screen.dart';
 import 'package:bookshelf/ui/screens/book_details_screen.dart';
 import 'package:bookshelf/ui/widgets/tiles/book_tile.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,9 @@ class HomeScreen extends StatelessWidget {
         label: const Text('Add book'),
         icon: const Icon(Icons.add),
         onPressed: () {
-
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return AddBookScreen();
+          }));
         },
       ),
     );
