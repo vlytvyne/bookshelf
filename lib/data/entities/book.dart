@@ -7,7 +7,7 @@ import 'package:floor/floor.dart';
 class Book {
 
   @PrimaryKey(autoGenerate: true)
-  final int id;
+  final int? id;
 
   final String title;
   final String author;
@@ -16,7 +16,7 @@ class Book {
   final int rating;
 
   Book({
-    this.id = 0,
+    this.id,
     required this.title,
     required this.author,
     required this.genre,

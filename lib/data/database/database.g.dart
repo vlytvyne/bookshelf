@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Book` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `author` TEXT NOT NULL, `genre` TEXT NOT NULL, `readingDate` INTEGER NOT NULL, `rating` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Book` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `author` TEXT NOT NULL, `genre` TEXT NOT NULL, `readingDate` INTEGER NOT NULL, `rating` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -139,7 +139,7 @@ class _$BookDao extends BookDao {
   Future<List<Book>> getAllBooks() async {
     return _queryAdapter.queryList('SELECT * FROM Book',
         mapper: (Map<String, Object?> row) => Book(
-            id: row['id'] as int,
+            id: row['id'] as int?,
             title: row['title'] as String,
             author: row['author'] as String,
             genre: _genreConverter.decode(row['genre'] as String),
