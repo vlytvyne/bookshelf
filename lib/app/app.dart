@@ -1,19 +1,19 @@
-import 'package:bookshelf/ui/screens/home_page.dart';
+import 'package:bookshelf/ui/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
-class App extends StatelessWidget {
+class BookshelfApp extends StatelessWidget {
 
-  const App({super.key});
+  const BookshelfApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Bookshelf',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const HomeScreen(),
     );
   }
 }
