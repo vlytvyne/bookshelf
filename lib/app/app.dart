@@ -1,3 +1,4 @@
+import 'package:bookshelf/app/router.dart';
 import 'package:bookshelf/ui/screens/library_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ class BookshelfApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Bookshelf',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
@@ -22,7 +23,7 @@ class BookshelfApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LibraryScreen(),
+      routerConfig: router,
     );
   }
 }

@@ -1,12 +1,23 @@
 import 'package:bookshelf/app/providers.dart';
+import 'package:bookshelf/app/router.dart';
 import 'package:bookshelf/data/entities/book.dart';
 import 'package:bookshelf/ui/screens/add_book_screen.dart';
 import 'package:bookshelf/ui/screens/book_details_screen.dart';
 import 'package:bookshelf/ui/widgets/tiles/book_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class LibraryScreen extends ConsumerWidget {
+
+  static go(BuildContext context, String assignmentId) {
+    context.go(Routes.library);
+  }
+
+  static push(BuildContext context, String assignmentId) {
+    context.push(Routes.library);
+  }
+
   const LibraryScreen({super.key});
 
   @override
@@ -35,9 +46,7 @@ class LibraryScreen extends ConsumerWidget {
           return BookTile(
             value[index],
             onClick: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return BookDetailsScreen(value[index].id!);
-              }));
+              BookDetailsScreen.push(context, value[index].id!);
             },
           );
         }
@@ -51,9 +60,7 @@ class LibraryScreen extends ConsumerWidget {
       label: const Text('Add book'),
       icon: const Icon(Icons.add),
       onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return AddBookScreen();
-        }));
+        AddBookScreen.push(context);
       },
     );
   }

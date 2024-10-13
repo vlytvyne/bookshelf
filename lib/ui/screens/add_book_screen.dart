@@ -1,13 +1,24 @@
 import 'package:bookshelf/app/providers.dart';
+import 'package:bookshelf/app/router.dart';
 import 'package:bookshelf/data/entities/book.dart';
 import 'package:bookshelf/data/enums/genre.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class AddBookScreen extends ConsumerStatefulWidget {
+
+  static go(BuildContext context) {
+    context.go(Routes.addBook);
+  }
+
+  static push(BuildContext context) {
+    context.push(Routes.addBook);
+  }
+
   const AddBookScreen({super.key});
 
   @override
@@ -168,7 +179,7 @@ class _AddBookScreenState extends ConsumerState<AddBookScreen> {
 
     try {
       await ref.read(databaseProvider).bookDao.insertBook(book);
-      Navigator.of(context).pop();
+      context.pop();
     } catch (e) {
       print('error');
     }
