@@ -15,21 +15,38 @@ class BookDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: _buildAppBar(context, ref),
+      body: _buildBody(context, ref),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context, WidgetRef ref) {
     final book = ref.watch(bookProvider(id));
 
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(book),
-    );
-  }
-
-  AppBar _buildAppBar() {
     return AppBar(
       title: const Text('Book details'),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () async {
+            try {
+              if (book.hasValue && book.value != null) {
+                await ref.read(databaseProvider).bookDao.deleteBook(book.value!);
+                Navigator.of(context).pop();
+              }
+            } catch (e) {
+              print('error');
+            }
+          }
+        )
+      ],
     );
   }
 
-  Widget _buildBody(AsyncValue<Book?> book) {
+  Widget _buildBody(BuildContext context, WidgetRef ref) {
+    final book = ref.watch(bookProvider(id));
+
     return switch (book) {
       AsyncError(:final error) => Text('Error: $error'),
       AsyncData(:final value) => value == null ? const Text('None') :
