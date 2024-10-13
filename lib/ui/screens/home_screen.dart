@@ -1,4 +1,5 @@
 import 'package:bookshelf/data/entities/book.dart';
+import 'package:bookshelf/ui/screens/book_details_screen.dart';
 import 'package:bookshelf/ui/widgets/tiles/book_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,14 @@ class HomeScreen extends StatelessWidget {
       body: ListView.builder(
         itemCount: books.length,
         itemBuilder: (context, index) {
-          return BookTile(books[index]);
+          return BookTile(
+            books[index],
+            onClick: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return BookDetailsScreen(books[index]);
+              }));
+            },
+          );
         }
       ),
       floatingActionButton: FloatingActionButton.extended(
