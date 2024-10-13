@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Book` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `author` TEXT NOT NULL, `genre` TEXT NOT NULL, `readingDate` INTEGER NOT NULL, `rating` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Book` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `author` TEXT NOT NULL, `genre` TEXT NOT NULL, `readingDate` INTEGER NOT NULL, `rating` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -122,7 +122,7 @@ class _$BookDao extends BookDao {
                   'id': item.id,
                   'title': item.title,
                   'author': item.author,
-                  'genre': item.genre,
+                  'genre': _genreConverter.encode(item.genre),
                   'readingDate': _dateTimeConverter.encode(item.readingDate),
                   'rating': item.rating
                 });
@@ -139,12 +139,12 @@ class _$BookDao extends BookDao {
   Future<List<Book>> getAllBooks() async {
     return _queryAdapter.queryList('SELECT * FROM Book',
         mapper: (Map<String, Object?> row) => Book(
-            row['id'] as int,
-            row['title'] as String,
-            row['author'] as String,
-            row['genre'] as String,
-            _dateTimeConverter.decode(row['readingDate'] as int),
-            row['rating'] as int));
+            id: row['id'] as int,
+            title: row['title'] as String,
+            author: row['author'] as String,
+            genre: _genreConverter.decode(row['genre'] as String),
+            readingDate: _dateTimeConverter.decode(row['readingDate'] as int),
+            rating: row['rating'] as int));
   }
 
   @override
@@ -155,3 +155,4 @@ class _$BookDao extends BookDao {
 
 // ignore_for_file: unused_element
 final _dateTimeConverter = DateTimeConverter();
+final _genreConverter = GenreConverter();

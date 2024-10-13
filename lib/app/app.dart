@@ -1,4 +1,4 @@
-import 'package:bookshelf/ui/screens/home_screen.dart';
+import 'package:bookshelf/ui/screens/library_screen.dart';
 import 'package:flutter/material.dart';
 
 class BookshelfApp extends StatelessWidget {
@@ -22,7 +22,7 @@ class BookshelfApp extends StatelessWidget {
           // errorStyle: ts.size12.red.bold,
         ),
       ),
-      home: const HomeScreen(),
+      home: const LibraryScreen(),
     );
   }
 }

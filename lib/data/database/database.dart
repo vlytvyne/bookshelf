@@ -9,7 +9,7 @@ import 'package:bookshelf/data/entities/book.dart';
 
 part 'database.g.dart';
 
-@TypeConverters([DateTimeConverter])
+@TypeConverters([DateTimeConverter, GenreConverter])
 @Database(version: 1, entities: [Book])
 abstract class AppDatabase extends FloorDatabase {
   BookDao get bookDao;

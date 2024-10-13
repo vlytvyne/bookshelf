@@ -1,19 +1,27 @@
 import 'dart:math';
 
+import 'package:bookshelf/data/enums/genre.dart';
 import 'package:floor/floor.dart';
 
 @entity
 class Book {
 
-  @primaryKey
+  @PrimaryKey(autoGenerate: true)
   final int id;
 
   final String title;
   final String author;
-  final String genre;
+  final Genre genre;
   final DateTime readingDate;
   final int rating;
 
-  Book(this.id, this.title, this.author, this.genre, this.readingDate, this.rating);
+  Book({
+    this.id = 0,
+    required this.title,
+    required this.author,
+    required this.genre,
+    required this.readingDate,
+    required this.rating,
+  });
 
 }
