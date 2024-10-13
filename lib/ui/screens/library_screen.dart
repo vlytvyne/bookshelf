@@ -14,36 +14,48 @@ class LibraryScreen extends ConsumerWidget {
     final books = ref.watch(booksListProvider);
     
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Library'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: switch (books) {
-        AsyncError(:final error) => Text('Error: $error'),
-        AsyncData(:final value) => ListView.builder(
-          itemCount: value.length,
-          itemBuilder: (context, index) {
-            return BookTile(
-              value[index],
-              onClick: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return BookDetailsScreen(value[index].id!);
-                }));
-              },
-            );
-          }
-        ),
-        _ => const CircularProgressIndicator(),
-      },
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text('Add book'),
-        icon: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return AddBookScreen();
-          }));
-        },
-      ),
+      appBar: _buildAppBar(),
+      body: _buildBody(books),
+      floatingActionButton: _buildFab(context),
     );
   }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: const Text('Library'),
+    );
+  }
+
+  Widget _buildBody(AsyncValue<List<Book>> books) {
+    return switch (books) {
+      AsyncError(:final error) => Text('Error: $error'),
+      AsyncData(:final value) => ListView.builder(
+        itemCount: value.length,
+        itemBuilder: (context, index) {
+          return BookTile(
+            value[index],
+            onClick: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return BookDetailsScreen(value[index].id!);
+              }));
+            },
+          );
+        }
+      ),
+      _ => const CircularProgressIndicator(),
+    };
+  }
+
+  FloatingActionButton _buildFab(BuildContext context) {
+    return FloatingActionButton.extended(
+      label: const Text('Add book'),
+      icon: const Icon(Icons.add),
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return AddBookScreen();
+        }));
+      },
+    );
+  }
+
 }

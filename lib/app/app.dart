@@ -12,14 +12,14 @@ class BookshelfApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
         useMaterial3: true,
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            // borderSide: BorderSide(color: Colors.purple, width: 2),
-          ),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.purple, width: 2),
+            borderSide: BorderSide(
+              color: Colors.purple,
+              width: 2,
+            ),
           ),
-          // errorStyle: ts.size12.red.bold,
         ),
       ),
       home: const LibraryScreen(),

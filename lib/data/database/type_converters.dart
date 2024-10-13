@@ -13,7 +13,6 @@ class DateTimeConverter extends TypeConverter<DateTime, int> {
   }
 }
 
-
 class GenreConverter extends TypeConverter<Genre, String> {
   @override
   Genre decode(String databaseValue) {
