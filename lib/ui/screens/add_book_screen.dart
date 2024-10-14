@@ -178,7 +178,7 @@ class _AddBookScreenState extends ConsumerState<AddBookScreen> {
     );
 
     try {
-      await ref.read(bookDaoProvider).insertBook(book);
+      await ref.read(bookRepositoryProvider).insertBook(book);
       if (context.mounted) {
         context.pop();
       }

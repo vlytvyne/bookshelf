@@ -31,7 +31,7 @@ class BookDetailsScreen extends ConsumerWidget {
   }
 
   AppBar _buildAppBar(BuildContext context, WidgetRef ref) {
-    final book = ref.watch(bookProvider(id));
+    final book = ref.watch(bookByIdProvider(id));
 
     return AppBar(
       title: const Text('Book details'),
@@ -41,7 +41,7 @@ class BookDetailsScreen extends ConsumerWidget {
           onPressed: () async {
             try {
               if (book.hasValue && book.value != null) {
-                await ref.read(bookDaoProvider).deleteBook(book.value!);
+                await ref.read(bookRepositoryProvider).deleteBook(book.value!);
                 if (context.mounted) {
                   context.pop();
                 }
@@ -56,7 +56,7 @@ class BookDetailsScreen extends ConsumerWidget {
   }
 
   Widget _buildBody(BuildContext context, WidgetRef ref) {
-    final book = ref.watch(bookProvider(id));
+    final book = ref.watch(bookByIdProvider(id));
 
     return switch (book) {
       AsyncError(:final error) => Text('Error: $error'),
