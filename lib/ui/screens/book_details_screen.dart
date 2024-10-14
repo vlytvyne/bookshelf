@@ -41,8 +41,10 @@ class BookDetailsScreen extends ConsumerWidget {
           onPressed: () async {
             try {
               if (book.hasValue && book.value != null) {
-                await ref.read(databaseProvider).bookDao.deleteBook(book.value!);
-                context.pop();
+                await ref.read(bookDaoProvider).deleteBook(book.value!);
+                if (context.mounted) {
+                  context.pop();
+                }
               }
             } catch (e) {
               print('error');

@@ -1,5 +1,4 @@
 import 'package:bookshelf/app/router.dart';
-import 'package:bookshelf/ui/screens/library_screen.dart';
 import 'package:flutter/material.dart';
 
 class BookshelfApp extends StatelessWidget {

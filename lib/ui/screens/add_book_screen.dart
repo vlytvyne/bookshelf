@@ -148,8 +148,8 @@ class _AddBookScreenState extends ConsumerState<AddBookScreen> {
       height: 40,
       width: double.infinity,
       child: FilledButton(
-        child: const Text('Save'),
         onPressed: _onSaveClick,
+        child: const Text('Save'),
       ),
     );
   }
@@ -178,11 +178,21 @@ class _AddBookScreenState extends ConsumerState<AddBookScreen> {
     );
 
     try {
-      await ref.read(databaseProvider).bookDao.insertBook(book);
-      context.pop();
+      await ref.read(bookDaoProvider).insertBook(book);
+      if (context.mounted) {
+        context.pop();
+      }
     } catch (e) {
       print('error');
     }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _authorController.dispose();
+    _readingDateController.dispose();
+    super.dispose();
   }
 
 }

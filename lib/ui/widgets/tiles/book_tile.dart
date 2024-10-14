@@ -2,7 +2,6 @@ import 'package:bookshelf/data/entities/book.dart';
 import 'package:bookshelf/ui/styles/one_line_text_style.dart';
 import 'package:bookshelf/ui/widgets/other/static_rating.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
